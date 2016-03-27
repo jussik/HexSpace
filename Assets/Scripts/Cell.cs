@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour
 	public int x;
 	public int y;
 	public List<Cell> adjacents = new List<Cell>();
+	public bool isRemoved;
 	public bool isRevealed;
 	public int enemy;
 	public int threat;
@@ -28,16 +29,21 @@ public class Cell : MonoBehaviour
 		UpdateUI();
 	}
 
-	public void Reveal()
+	public void Reveal(bool remove = false)
 	{
 		if (isRevealed)
 			return;
 
 		isRevealed = true;
-		UpdateUI();
+		if (remove && threat == 0) {
+			GetComponent<MeshRenderer>().enabled = false;
+			GetComponent<Collider2D>().enabled = false;
+		} else {
+			UpdateUI();
+		}
 		if (threat == 0) {
 			for (var i = 0; i < adjacents.Count; i++) {
-				adjacents[i].Reveal();
+				adjacents[i].Reveal(remove);
 			}
 		}
 	}

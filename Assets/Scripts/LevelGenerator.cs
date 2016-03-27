@@ -38,12 +38,12 @@ public class LevelGenerator : MonoBehaviour
 			}
 		}
 		for (var i = 0; i < rows; i++) {
-			cells[i, 0].Reveal();
-			cells[i, columns - 1].Reveal();
+			cells[i, 0].Reveal(true);
+			cells[i, columns - 1].Reveal(true);
 		}
 		for (var j = 0; j < columns; j++) {
-			cells[0, j].Reveal();
-			cells[rows - 1, j].Reveal();
+			cells[0, j].Reveal(true);
+			cells[rows - 1, j].Reveal(true);
 		}
 	}
 
