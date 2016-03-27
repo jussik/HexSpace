@@ -55,7 +55,7 @@ public class Cell : MonoBehaviour
 			text.color = Color.red;
 		if (isRevealed) {
 			var pos = transform.position;
-			pos.z = 1.0f;
+			pos.z = 0.5f;
 			transform.position = pos;
 			GetComponent<Collider2D>().enabled = false;
 			text.text = threat == 0 ? string.Empty : threat.ToString();

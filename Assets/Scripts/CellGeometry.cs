@@ -12,7 +12,7 @@ public class CellGeometry : MonoBehaviour
 	{
 		for (int i = 0; i < 6; i++) {
 			float angle = Mathf.PI / 3.0f * i;
-			var vert = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), -1.0f);
+			var vert = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), -0.5f);
 			// bottom
 			verts[i] = vert;
 			lineIndices[2 * i] = i;
