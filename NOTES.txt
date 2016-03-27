@@ -1,0 +1,88 @@
+Hexmonstersweeper (?)
+
+3rd person/top down
+twin stick/k+m controls
+hex grid (to ensure more surface area as cubes cannot be exposed diagonally)
+randomly generated
+cells may be cleared from any adjacent cell
+
+mamono minesweeper: http://www.hojamaka.com/game/mamono_sweeper/en.html
+hex minesweeper: http://www.minesweeperonline.net/hex-mines.php
+hex grids: http://www.redblobgames.com/grids/hexagons/
+
+level has:
+player
+grid of cells
+timer
+
+player has:
+level (attack,defense)
+experience
+health
+
+each cell has:
+enemy type
+refs to adjacent cells
+threat (sum of enemy levels in adjacent cells)
+
+enemy type has:
+level (attack,defense)
+initial health
+
+enemy has:
+type
+health
+
+on reveal:
+if 0 threat, reveal all adjacent 0 threat cells
+if revealed cell contains enemy type:
+instantiate enemy
+while(enemy or player alive) {
+    enemy.health -= player.attack
+    if(enemy.health <= 0) {
+        destroy enemy
+        player.xp += enemy.level
+    } else {
+        player.health -= enemy.health
+        if(player.health <= 0) {
+            load death scene
+        }
+    }
+}
+
+on xp increase:
+if xp>next level threshold, level++
+if adding any health, only replenish the amount added, do not bring back to full
+
+level generation:
+pass 1:
+make cells
+set physical transforms
+generate enemies
+pass 2:
+store adjacents
+calculate threats
+
+
+later:
+flag to mark cells
+items/inventory
+ability to attempt to escape from an encounter
+cell may contain exit which allows travel to next level before enemys killed
+multiple levels in single map (offset grids? see leveltiling.png)
+
+items:
+food (inventory, single use, +health)
+bomb (inventory, single use, reveal all adjacent cells, +attack)
+weapon (equipment, +attack)
+shield (equipment, +defense)
+elixir (instant use, +max health)
+
+item type has:
+name
+icon
+is equipment, inventory item or instant use?
+
+inventory item has:
+type
+quantity
