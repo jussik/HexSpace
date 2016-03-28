@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class Player : MonoBehaviour
 		if (health > 0) {
 			xp += enemyLevel;
 			CheckLevel();
+		} else {
+			SceneManager.LoadScene(0);
 		}
 		NotifyChanged();
 	}
