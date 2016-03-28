@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,9 +53,9 @@ public class Cell : MonoBehaviour
 
 	void UpdateUI()
 	{
-		var text = GetComponentInChildren<Text>();
+		var text = GetComponentInChildren<TextMesh>();
 		if (enemy > 0)
-			text.color = Color.red;
+			text.GetComponent<MeshRenderer>().material.color = Color.red;
 		if (isRevealed) {
 			var pos = transform.position;
 			pos.z = 0.5f;
