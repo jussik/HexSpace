@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Cell : MonoBehaviour
 {
+	public Level level;
 	public int x;
 	public int y;
 	public List<Cell> adjacents = new List<Cell>();
@@ -46,6 +47,10 @@ public class Cell : MonoBehaviour
 				adjacents[i].Reveal(remove);
 			}
 		}
+
+		if (enemy > 0) {
+			level.player.Battle(enemy);
+		}
 	}
 
 	void UpdateUI()
@@ -64,9 +69,6 @@ public class Cell : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if (enemy > 0) {
-			enemy = 0;
-		}
 		Reveal();
 	}
 }

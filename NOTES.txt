@@ -13,7 +13,6 @@ hex grids: http://www.redblobgames.com/grids/hexagons/
 level has:
 player
 grid of cells
-timer
 
 player has:
 level (attack,defense)
@@ -65,8 +64,10 @@ calculate threats
 
 
 later:
-flag to mark cells
+procedurally generated ship/enemy models with turrets representing level
 items/inventory
+flag to mark cells
+level timer
 ability to attempt to escape from an encounter
 cell may contain exit which allows travel to next level before enemys killed
 multiple levels in single map (offset grids? see leveltiling.png)

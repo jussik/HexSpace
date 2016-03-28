@@ -8,9 +8,11 @@ public class LevelGenerator : MonoBehaviour
 
 	private int rows = 25;
 	private int columns = 15;
+	private Level level;
 
 	void Start()
 	{
+		level = GetComponent<Level>();
 		Cell[,] cells = new Cell[rows, columns];
 		for (var i = 0; i < rows; i++) {
 			for (var j = 0; j < columns; j++) {
@@ -45,6 +47,7 @@ public class LevelGenerator : MonoBehaviour
 			cells[0, j].Reveal(true);
 			cells[rows - 1, j].Reveal(true);
 		}
+		level.cells = cells;
 	}
 
 	Cell Spawn(int i, int j)
@@ -56,6 +59,7 @@ public class LevelGenerator : MonoBehaviour
 		obj.name = "Cell " + i + "," + j;
 		//obj.GetComponentInChildren<Text>().text = i + "," + j;
 		var cell = obj.GetComponent<Cell>();
+		cell.level = level;
 		cell.x = i;
 		cell.y = j;
 		if (i > 0 && i < rows - 1 && j > 0 && j < columns - 1) {
