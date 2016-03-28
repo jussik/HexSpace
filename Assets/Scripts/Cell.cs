@@ -66,10 +66,12 @@ public class Cell : MonoBehaviour
 			GetComponent<Collider2D>().enabled = false;
 			text.text = threat == 0 ? string.Empty : threat.ToString();
 		}
+		GetComponent<MeshRenderer>().materials[1].color = isRevealed ? new Color(0.2f, 0.2f, 0.2f) : new Color(0.25f, 0.25f, 0.25f);
 	}
 
-	void OnMouseDown()
+	void OnMouseOver()
 	{
-		Reveal();
+		if (Input.GetButton("Fire1"))
+			Reveal();
 	}
 }

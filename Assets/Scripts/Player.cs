@@ -12,11 +12,31 @@ public class Player : MonoBehaviour
 
 	public event EventHandler Changed;
 
+	public GameObject laserPrefab;
+
+	private LaserGeometry laser;
+
 	void Start()
 	{
 		health = 10;
 		CheckLevel();
 		NotifyChanged();
+
+		laser = Instantiate(laserPrefab).GetComponent<LaserGeometry>();
+		laser.transform.SetParent(transform);
+		laser.gameObject.SetActive(false);
+	}
+
+	void Update()
+	{
+		if (Input.GetButton("Fire1")) {
+			Vector3 mouse = Input.mousePosition;
+			mouse.z = -Camera.main.transform.position.z;
+			laser.SetTarget(Camera.main.ScreenToWorldPoint(mouse));
+			laser.gameObject.SetActive(true);
+		} else {
+			laser.gameObject.SetActive(false);
+		}
 	}
 
 	public void Battle(int enemyLevel)
