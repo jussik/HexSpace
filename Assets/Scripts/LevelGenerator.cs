@@ -5,6 +5,7 @@ using System.Collections;
 public class LevelGenerator : MonoBehaviour
 {
 	public GameObject cellPrefab;
+	public string seed;
 
 	private const int rows = 25;
 	private const int columns = 15;
@@ -13,6 +14,9 @@ public class LevelGenerator : MonoBehaviour
 
 	void Start()
 	{
+		if (!string.IsNullOrEmpty(seed))
+			Random.seed = seed.GetHashCode();
+		
 		level = GetComponent<Level>();
 		Cell[,] cells = new Cell[rows, columns];
 		for (var i = 0; i < rows; i++) {
