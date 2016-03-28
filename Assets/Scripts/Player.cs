@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
 	private void SetTurrets(params Vector3[] coords)
 	{
 		int requiredTurrets = coords.Length - turrets.Count;
-		Debug.Log(requiredTurrets);
 		if (requiredTurrets > 0) {
 			for (var i = 0; i < requiredTurrets; i++) {
 				var turret = Instantiate(turretPrefab).GetComponent<TurretGeometry>();
