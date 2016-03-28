@@ -15,12 +15,15 @@ public class Player : MonoBehaviour
 	public GameObject laserPrefab;
 
 	private LaserGeometry laser;
+	private Plane groundPlane;
 
 	void Start()
 	{
 		health = 10;
 		CheckLevel();
 		NotifyChanged();
+
+		groundPlane = new Plane(Vector3.forward, transform.position.z);
 
 		laser = Instantiate(laserPrefab).GetComponent<LaserGeometry>();
 		laser.transform.SetParent(transform);
@@ -31,7 +34,7 @@ public class Player : MonoBehaviour
 	{
 		if (Input.GetButton("Fire1")) {
 			Vector3 mouse = Input.mousePosition;
-			mouse.z = -Camera.main.transform.position.z;
+			mouse.z = -groundPlane.GetDistanceToPoint(Camera.main.transform.position);
 			laser.SetTarget(Camera.main.ScreenToWorldPoint(mouse));
 			laser.gameObject.SetActive(true);
 		} else {
