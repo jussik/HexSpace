@@ -37,9 +37,7 @@ public class Cell : MonoBehaviour
 
 		isRevealed = true;
 		if (hideIfPossible && threat == 0) {
-			GetComponent<MeshRenderer>().enabled = false;
-			GetComponent<Collider2D>().enabled = false;
-			GetComponentInChildren<Canvas>().enabled = false;
+			gameObject.SetActive(false);
 		} else {
 			UpdateUI();
 		}

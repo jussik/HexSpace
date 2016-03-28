@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -9,6 +11,7 @@ public class Player : MonoBehaviour
 	public int xp { get; private set; }
 	public int nextLevelXp { get; private set; }
 	public int health { get; private set; }
+	public int[] levelXps;
 
 	public event EventHandler Changed;
 
@@ -59,12 +62,15 @@ public class Player : MonoBehaviour
 		}
 		NotifyChanged();
 	}
-
-	void CheckLevel()
+		
+	public void CheckLevel()
 	{
 		while (xp >= nextLevelXp) {
 			level++;
-			nextLevelXp = (int)(Mathf.Pow(level, 2.7f) * 5.0f) + 5;
+			if (level <= levelXps.Length)
+				nextLevelXp = levelXps[level - 1];
+			else
+				nextLevelXp = 99999;
 		}
 	}
 
