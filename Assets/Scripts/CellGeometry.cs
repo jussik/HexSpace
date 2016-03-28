@@ -56,6 +56,7 @@ public class CellGeometry : MonoBehaviour
 		mesh = new Mesh { vertices = verts, subMeshCount = 2 };
 		mesh.SetIndices(lineIndices, MeshTopology.Lines, 0);
 		mesh.SetIndices(faceIndices, MeshTopology.Triangles, 1);
+		mesh.Optimize();
 	}
 
 	void Start()

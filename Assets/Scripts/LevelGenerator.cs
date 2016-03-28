@@ -6,8 +6,9 @@ public class LevelGenerator : MonoBehaviour
 {
 	public GameObject cellPrefab;
 
-	private int rows = 25;
-	private int columns = 15;
+	private const int rows = 25;
+	private const int columns = 15;
+	private int nextId = 0;
 	private Level level;
 
 	void Start()
@@ -59,6 +60,7 @@ public class LevelGenerator : MonoBehaviour
 		obj.name = "Cell " + i + "," + j;
 		//obj.GetComponentInChildren<Text>().text = i + "," + j;
 		var cell = obj.GetComponent<Cell>();
+		cell.id = ++nextId;
 		cell.level = level;
 		cell.x = i;
 		cell.y = j;
