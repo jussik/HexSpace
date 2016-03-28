@@ -1,47 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.ComponentModel;
+using System;
 
-public class Player : MonoBehaviour, INotifyPropertyChanged
+public class Player : MonoBehaviour
 {
-	int _level;
-	public int level {
-		get { return _level; }
-		set {
-			if (_level != value) {
-				_level = value;
-				NotifyPropertyChanged("level");
-			}
-		}
-	}
+	public int level { get; private set; }
+	public int xp { get; private set; }
+	public int nextLevelXp { get; private set; }
+	public int health { get; private set; }
 
-	int _xp;
-	public int xp {
-		get { return _xp; }
-		set {
-			if (_xp != value) {
-				_xp = value;
-				CheckLevel();
-				NotifyPropertyChanged("xp");
-			}
-		}
-	}
-	public int nextLevelXp;
-
-	int _health = 10;
-	public int health {
-		get { return _health; }
-		set {
-			if (_health != value) {
-				_health = value;
-				NotifyPropertyChanged("health");
-			}
-		}
-	}
+	public event EventHandler Changed;
 
 	void Start()
 	{
+		health = 10;
 		CheckLevel();
+		NotifyChanged();
 	}
 
 	public void Battle(int enemyLevel)
@@ -55,7 +29,9 @@ public class Player : MonoBehaviour, INotifyPropertyChanged
 		}
 		if (health > 0) {
 			xp += enemyLevel;
+			CheckLevel();
 		}
+		NotifyChanged();
 	}
 
 	void CheckLevel()
@@ -63,15 +39,13 @@ public class Player : MonoBehaviour, INotifyPropertyChanged
 		while (xp >= nextLevelXp) {
 			level++;
 			nextLevelXp = (int)(Mathf.Pow(level, 2.7f) * 5.0f) + 5;
-			NotifyPropertyChanged("nextLevelXp");
 		}
 	}
 
-	public event PropertyChangedEventHandler PropertyChanged;
-	void NotifyPropertyChanged(string info)
+	void NotifyChanged()
 	{
-		if (PropertyChanged != null) {
-			PropertyChanged(this, new PropertyChangedEventArgs(info));
+		if (Changed != null) {
+			Changed(this, EventArgs.Empty);
 		}
 	}
 }
