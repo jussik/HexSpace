@@ -58,29 +58,55 @@ public class Player : MonoBehaviour
 
 	private void UpdateTurrets()
 	{
-		// NOTE: only works if called after each level increment, level must never be decremented
 		switch (level) {
 		case 1:
-			var turret = AddTurret();
-			turret.transform.localPosition = new Vector3(0.0f, -0.25f, -0.1f);
+			SetTurrets(new Vector3(0.0f, -0.25f, -0.1f));
 			break;
 		case 2:
-			turrets[0].transform.localPosition = new Vector3(-0.2f, -0.15f, -0.1f);
-			var turret2 = AddTurret();
-			turret2.transform.localPosition = new Vector3(0.2f, -0.15f, -0.1f);
+			SetTurrets(
+				new Vector3(-0.2f, -0.15f, -0.1f),
+				new Vector3(0.2f, -0.15f, -0.1f));
 			break;
 		case 3:
-			var turret3 = AddTurret();
-			turret3.transform.localPosition = new Vector3(0.0f, 0.2f, -0.1f);
+			SetTurrets(
+				new Vector3(-0.2f, -0.15f, -0.1f),
+				new Vector3(0.2f, -0.15f, -0.1f),
+				new Vector3(0.0f, 0.2f, -0.1f));
+			break;
+		case 4:
+			SetTurrets(new Vector3(0.0f, -0.25f, -0.1f));
+			break;
+		case 5:
+			SetTurrets(
+				new Vector3(0.0f, -0.2f, -0.1f),
+				new Vector3(0.0f, 0.0f, -0.1f),
+				new Vector3(0.0f, 0.2f, -0.1f));
 			break;
 		}
 	}
-	private TurretGeometry AddTurret()
+	private void SetTurrets(params Vector3[] coords)
 	{
-		var turret = Instantiate(turretPrefab).GetComponent<TurretGeometry>();
-		turret.transform.SetParent(transform);
-		turrets.Add(turret);
-		return turret;
+		int requiredTurrets = coords.Length - turrets.Count;
+		Debug.Log(requiredTurrets);
+		if (requiredTurrets > 0) {
+			for (var i = 0; i < requiredTurrets; i++) {
+				var turret = Instantiate(turretPrefab).GetComponent<TurretGeometry>();
+				turret.transform.SetParent(transform);
+				turrets.Add(turret);
+			}
+		} else if (requiredTurrets < 0) {
+			for (var i = turrets.Count + requiredTurrets; i < turrets.Count; i++) {
+				turrets[i].gameObject.SetActive(false);
+			}
+		}
+		for (var i = 0; i < coords.Length; i++) {
+			var turret = turrets[i];
+			turret.gameObject.SetActive(true);
+			turret.transform.localPosition = coords[i];
+			// TODO: something sometimes changes the rotation 90deg
+			// ensure we're still pointing where we should
+			turret.transform.rotation = Quaternion.identity;
+		}
 	}
 
 	void NotifyChanged()

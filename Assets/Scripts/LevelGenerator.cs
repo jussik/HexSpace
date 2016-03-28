@@ -29,8 +29,9 @@ public class LevelGenerator : MonoBehaviour
 			6
 		};
 		int[] levelXps = {
-			1,
+			/*1,
 			2,
+			3,*/
 			// TODO: ^remove above
 			15,
 			50,
