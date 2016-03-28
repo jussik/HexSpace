@@ -21,28 +21,22 @@ public class LevelGenerator : MonoBehaviour
 
 		level = GetComponent<Level>();
 
-		int[] counts = {
+		int[] enemyCounts = {
 			33,
 			27,
 			20,
 			13,
 			6
 		};
-		int[] xps = {
-			10,
+		int[] levelXps = {
+			15,
 			50,
-			167,
-			199,
+			160,
+			200,
 			229
 		};
-		level.player.levelXps = xps;
+		level.player.levelXps = levelXps;
 		level.player.CheckLevel();
-		int enemyCount = 0, enemyXpSum = 0;
-		for (int i = 0; i < counts.Length; i++) {
-			var c = counts[i];
-			enemyCount += c;
-			enemyXpSum += c * (i + 1);
-		}
 
 		// spawn cells
 		Cell[,] cells = new Cell[rows, columns];
@@ -53,12 +47,14 @@ public class LevelGenerator : MonoBehaviour
 			for (var j = 0; j < columns; j++) {
 				var cell = Spawn(i, j);
 				cells[i, j] = cell;
+				// store non-border cells in another array, used in shuffling of enemies
 				if (i > 0 && i < rows - 1 && j > 0 && j < columns - 1) {
 					innerCells[ic++] = cell;
-					if (enemyIndex < enemyCount) {
-						var ec = --counts[enemyLvl];
+					if (enemyLvl < enemyCounts.Length) {
+						// add enemies iteratively
+						var enemiesLeftInLevel = --enemyCounts[enemyLvl];
 						cell.enemy = enemyLvl + 1;
-						if (ec == 0) {
+						if (enemiesLeftInLevel == 0) {
 							enemyLvl++;
 						}
 						enemyIndex++;
