@@ -17,16 +17,13 @@ public class Player : MonoBehaviour
 
 	public GameObject turretPrefab;
 
+	private List<TurretGeometry> turrets = new List<TurretGeometry>();
+
 	void Start()
 	{
 		health = 10;
 		CheckLevel();
 		NotifyChanged();
-
-		var turret = Instantiate(turretPrefab);
-		turret.transform.SetParent(transform);
-		var relpos = new Vector3(0.0f, -0.25f, -0.1f);
-		turret.transform.localPosition = relpos;
 	}
 
 	public void Battle(int enemyLevel)
@@ -51,11 +48,39 @@ public class Player : MonoBehaviour
 	{
 		while (xp >= nextLevelXp) {
 			level++;
+			UpdateTurrets();
 			if (level <= levelXps.Length)
 				nextLevelXp = levelXps[level - 1];
 			else
 				nextLevelXp = 99999;
 		}
+	}
+
+	private void UpdateTurrets()
+	{
+		// NOTE: only works if called after each level increment, level must never be decremented
+		switch (level) {
+		case 1:
+			var turret = AddTurret();
+			turret.transform.localPosition = new Vector3(0.0f, -0.25f, -0.1f);
+			break;
+		case 2:
+			turrets[0].transform.localPosition = new Vector3(-0.2f, -0.15f, -0.1f);
+			var turret2 = AddTurret();
+			turret2.transform.localPosition = new Vector3(0.2f, -0.15f, -0.1f);
+			break;
+		case 3:
+			var turret3 = AddTurret();
+			turret3.transform.localPosition = new Vector3(0.0f, 0.2f, -0.1f);
+			break;
+		}
+	}
+	private TurretGeometry AddTurret()
+	{
+		var turret = Instantiate(turretPrefab).GetComponent<TurretGeometry>();
+		turret.transform.SetParent(transform);
+		turrets.Add(turret);
+		return turret;
 	}
 
 	void NotifyChanged()

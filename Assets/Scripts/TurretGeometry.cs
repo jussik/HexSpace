@@ -4,10 +4,10 @@ using System.Collections;
 public class TurretGeometry : MonoBehaviour
 {
 	public int level;
+	public LaserGeometry laser;
 
 	public GameObject laserPrefab;
 
-	private LaserGeometry laser;
 	private Plane groundPlane;
 
 	private static Mesh mesh1;
@@ -20,8 +20,8 @@ public class TurretGeometry : MonoBehaviour
 			new Vector3(0.1f, -0.1f),
 			new Vector3(-0.1f, -0.1f),
 			new Vector3(-0.1f, 0.1f),
-			new Vector3(0, 0.1f),
-			new Vector3(0, 0.3f)
+			new Vector3(0.0f, 0.0f),
+			new Vector3(0.0f, 0.3f)
 		};
 		mesh1.SetIndices(new int[] {
 			0, 1,
