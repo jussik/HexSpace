@@ -109,6 +109,7 @@ public class LevelGenerator : MonoBehaviour
 		float x = i * 1.5f;
 		float y = j * h + ((i % 2) * h / 2.0f);
 		var obj = (GameObject)Instantiate(cellPrefab, new Vector3(x, y), Quaternion.identity);
+		obj.transform.SetParent(transform);
 		obj.name = "Cell " + i + "," + j;
 		//obj.GetComponentInChildren<Text>().text = i + "," + j;
 		var cell = obj.GetComponent<Cell>();

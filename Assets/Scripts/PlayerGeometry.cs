@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerGeometry : MonoBehaviour
 {
+	private Player player;
+
 	static readonly Mesh mesh;
 	static PlayerGeometry()
 	{

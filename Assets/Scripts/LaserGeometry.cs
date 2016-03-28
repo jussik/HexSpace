@@ -9,6 +9,7 @@ public class LaserGeometry : MonoBehaviour
 	public void SetTarget(Vector3 position)
 	{
 		verts[1] = transform.parent.InverseTransformPoint(position);
+		verts[1].z = 0;
 		if (mesh != null)
 			mesh.vertices = verts; // trigger upload
 	}

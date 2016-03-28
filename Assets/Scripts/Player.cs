@@ -15,10 +15,7 @@ public class Player : MonoBehaviour
 
 	public event EventHandler Changed;
 
-	public GameObject laserPrefab;
-
-	private LaserGeometry laser;
-	private Plane groundPlane;
+	public GameObject turretPrefab;
 
 	void Start()
 	{
@@ -26,23 +23,10 @@ public class Player : MonoBehaviour
 		CheckLevel();
 		NotifyChanged();
 
-		groundPlane = new Plane(Vector3.forward, transform.position.z);
-
-		laser = Instantiate(laserPrefab).GetComponent<LaserGeometry>();
-		laser.transform.SetParent(transform);
-		laser.gameObject.SetActive(false);
-	}
-
-	void Update()
-	{
-		if (Input.GetButton("Fire1")) {
-			Vector3 mouse = Input.mousePosition;
-			mouse.z = -groundPlane.GetDistanceToPoint(Camera.main.transform.position);
-			laser.SetTarget(Camera.main.ScreenToWorldPoint(mouse));
-			laser.gameObject.SetActive(true);
-		} else {
-			laser.gameObject.SetActive(false);
-		}
+		var turret = Instantiate(turretPrefab);
+		turret.transform.SetParent(transform);
+		var relpos = new Vector3(0.0f, -0.25f, -0.1f);
+		turret.transform.localPosition = relpos;
 	}
 
 	public void Battle(int enemyLevel)
