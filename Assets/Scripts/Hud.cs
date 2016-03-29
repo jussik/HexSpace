@@ -12,13 +12,14 @@ public class Hud : MonoBehaviour
 
 	private Player player;
 	private Stopwatch stopwatch;
+	private bool started;
 
 	void Start()
 	{
 		player = level.player;
 		player.Changed += UpdatePlayer;
 		UpdatePlayer(player, null);
-		stopwatch = Stopwatch.StartNew();
+		stopwatch = new Stopwatch();
 	}
 
 	void UpdatePlayer(object sender, EventArgs e)
@@ -33,6 +34,16 @@ public class Hud : MonoBehaviour
 
 	void Update()
 	{
+		if (!started)
+		{
+			if (Input.GetButton("Fire1")
+				|| Input.GetAxisRaw("Horizontal") != 0.0f
+				|| Input.GetAxisRaw("Vertical") != 0.0f)
+			{
+				started = true;
+				stopwatch.Start();
+			}
+		}
 		timer.text = stopwatch.Elapsed.ToString();
 	}
 
