@@ -22,9 +22,9 @@ public class Hud : MonoBehaviour
 	void UpdatePlayer(object sender, EventArgs e)
 	{
 		var xpReq = player.nextLevelXp == -1
-			? " (max level)"
+			? " (max)"
 			: "/" + player.nextLevelXp;
-		text.text = string.Format("Level: {0}\nXP: {1}/{2}\nHealth: {3}", player.level, player.xp, xpReq, player.health);
+		text.text = string.Format("Level: {0}\nXP: {1}{2}\nHealth: {3}", player.level, player.xp, xpReq, player.health);
 	}
 
 	void OnDestroy()

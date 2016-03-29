@@ -46,16 +46,13 @@ public class Player : MonoBehaviour
 		
 	public void CheckLevel()
 	{
-		while (xp >= nextLevelXp) {
+		while (xp >= nextLevelXp && nextLevelXp > -1) {
 			level++;
 			UpdateTurrets();
 
-			if (level > levelXps.Length)
-			{
-				nextLevelXp = -1;
-				break;
-			}
-			nextLevelXp = levelXps[level - 1];
+			nextLevelXp = level <= levelXps.Length
+				? levelXps[level - 1]
+				: -1;
 		}
 	}
 
