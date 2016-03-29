@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
 	public GameObject turretPrefab;
 
-	private List<TurretGeometry> turrets = new List<TurretGeometry>();
+	private readonly List<TurretGeometry> turrets = new List<TurretGeometry>();
 
 	void Start()
 	{
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		if (health > 0) {
-			xp += enemyLevel;
+			xp += 1 << (enemyLevel - 1); // xp is 2^(enemyLevel-1)
 			CheckLevel();
 		} else {
 			SceneManager.LoadScene(0);
@@ -49,10 +49,13 @@ public class Player : MonoBehaviour
 		while (xp >= nextLevelXp) {
 			level++;
 			UpdateTurrets();
-			if (level <= levelXps.Length)
-				nextLevelXp = levelXps[level - 1];
-			else
-				nextLevelXp = 99999;
+
+			if (level > levelXps.Length)
+			{
+				nextLevelXp = -1;
+				break;
+			}
+			nextLevelXp = levelXps[level - 1];
 		}
 	}
 

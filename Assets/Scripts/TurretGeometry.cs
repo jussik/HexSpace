@@ -10,33 +10,40 @@ public class TurretGeometry : MonoBehaviour
 
 	private Plane groundPlane;
 
-	private static Mesh mesh1;
-
-	static TurretGeometry()
+	static Mesh mesh;
+	static Mesh GetMesh()
 	{
-		mesh1 = new Mesh();
-		mesh1.vertices = new Vector3[] {
-			new Vector3(0.1f, 0.1f),
-			new Vector3(0.1f, -0.1f),
-			new Vector3(-0.1f, -0.1f),
-			new Vector3(-0.1f, 0.1f),
-			new Vector3(0.0f, 0.0f),
-			new Vector3(0.0f, 0.3f)
-		};
-		mesh1.SetIndices(new int[] {
-			0, 1,
-			1, 2,
-			2, 3,
-			3, 0,
-			4, 5
-		}, MeshTopology.Lines, 0);
-		mesh1.Optimize();
+		if (mesh == null)
+		{
+			mesh = new Mesh
+			{
+				vertices = new[]
+				{
+					new Vector3(0.1f, 0.1f),
+					new Vector3(0.1f, -0.1f),
+					new Vector3(-0.1f, -0.1f),
+					new Vector3(-0.1f, 0.1f),
+					new Vector3(0.0f, 0.0f),
+					new Vector3(0.0f, 0.3f)
+				}
+			};
+			mesh.SetIndices(new[]
+			{
+				0, 1,
+				1, 2,
+				2, 3,
+				3, 0,
+				4, 5
+			}, MeshTopology.Lines, 0);
+			mesh.Optimize();
+		}
+		return mesh;
 	}
 
 	private float laserZoffset = 0.01f;
 	void Start()
 	{
-		GetComponent<MeshFilter>().mesh = mesh1;
+		GetComponent<MeshFilter>().mesh = GetMesh();
 
 		laser = Instantiate(laserPrefab).GetComponent<LaserGeometry>();
 		laser.gameObject.SetActive(false);

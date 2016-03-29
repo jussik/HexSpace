@@ -4,7 +4,7 @@ using System.Collections;
 public class LaserGeometry : MonoBehaviour
 {
 	private Mesh mesh;
-	private Vector3[] verts = new Vector3[]{ Vector3.zero, Vector3.zero };
+	private Vector3[] verts = { Vector3.zero, Vector3.zero };
 
 	public void SetTarget(Vector3 position)
 	{

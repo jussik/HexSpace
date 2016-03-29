@@ -5,10 +5,7 @@ using System.Linq;
 public class Cell : MonoBehaviour
 {
 	public Level level;
-	public int id;
-	public int x;
-	public int y;
-	public List<Cell> adjacents = new List<Cell>();
+	public readonly List<Cell> adjacents = new List<Cell>();
 	public bool isRevealed;
 	public int enemy;
 	public int threat;
@@ -21,12 +18,10 @@ public class Cell : MonoBehaviour
 
 	public void UpdateThreat()
 	{
-		if (enemy > 0) {
-			threat = enemy;
-		} else {
-			threat = adjacents.Sum(c => c.enemy);
-		}
-		UpdateUI();
+		threat = enemy > 0
+			? enemy
+			: adjacents.Sum(c => c.enemy);
+		UpdateModel();
 	}
 
 	public void Reveal(bool hideIfPossible = false)
@@ -38,11 +33,12 @@ public class Cell : MonoBehaviour
 		if (hideIfPossible && threat == 0) {
 			gameObject.SetActive(false);
 		} else {
-			UpdateUI();
+			UpdateModel();
 		}
 		if (threat == 0) {
-			for (var i = 0; i < adjacents.Count; i++) {
-				adjacents[i].Reveal(hideIfPossible);
+			foreach (var cell in adjacents)
+			{
+				cell.Reveal(hideIfPossible);
 			}
 		}
 
@@ -51,7 +47,7 @@ public class Cell : MonoBehaviour
 		}
 	}
 
-	void UpdateUI()
+	void UpdateModel()
 	{
 		var text = GetComponentInChildren<TextMesh>();
 		if (enemy > 0)

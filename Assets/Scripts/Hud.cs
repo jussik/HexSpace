@@ -15,17 +15,20 @@ public class Hud : MonoBehaviour
 		text = transform.Find("Text").GetComponent<Text>();
 		player = level.player;
 
-		player.Changed += updatePlayer;
-		updatePlayer(player, null);
+		player.Changed += UpdatePlayer;
+		UpdatePlayer(player, null);
 	}
 
-	void updatePlayer(object sender, EventArgs e)
+	void UpdatePlayer(object sender, EventArgs e)
 	{
-		text.text = string.Format("Level: {0}\nXP: {1}/{2}\nHealth: {3}", player.level, player.xp, player.nextLevelXp, player.health);
+		var xpReq = player.nextLevelXp == -1
+			? " (max level)"
+			: "/" + player.nextLevelXp;
+		text.text = string.Format("Level: {0}\nXP: {1}/{2}\nHealth: {3}", player.level, player.xp, xpReq, player.health);
 	}
 
 	void OnDestroy()
 	{
-		player.Changed -= updatePlayer;
+		player.Changed -= UpdatePlayer;
 	}
 }

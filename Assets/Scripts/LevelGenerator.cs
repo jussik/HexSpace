@@ -9,8 +9,6 @@ public class LevelGenerator : MonoBehaviour
 
 	private const int rows = 25;
 	private const int columns = 15;
-	private int nextId = 0;
-	private int enemyIndex;
 	private Level level;
 
 	void Start()
@@ -28,15 +26,11 @@ public class LevelGenerator : MonoBehaviour
 			6
 		};
 		int[] levelXps = {
-			/*1,
-			2,
-			3,*/
-			// TODO: ^remove above
 			15,
-			50,
+			60,
 			160,
-			200,
-			229
+			271,
+			367
 		};
 		level.player.levelXps = levelXps;
 		level.player.CheckLevel();
@@ -60,7 +54,6 @@ public class LevelGenerator : MonoBehaviour
 						if (enemiesLeftInLevel == 0) {
 							enemyLvl++;
 						}
-						enemyIndex++;
 					}
 				}
 			}
@@ -116,10 +109,7 @@ public class LevelGenerator : MonoBehaviour
 		obj.name = "Cell " + i + "," + j;
 		//obj.GetComponentInChildren<Text>().text = i + "," + j;
 		var cell = obj.GetComponent<Cell>();
-		cell.id = ++nextId;
 		cell.level = level;
-		cell.x = i;
-		cell.y = j;
-		return cell;
+	    return cell;
 	}
 }
