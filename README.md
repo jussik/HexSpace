@@ -1,6 +1,6 @@
 # HexSpace
 
-A simple test Unity 3D game.
+A simple hex-based Unity 3D minesweepery game
 
 Play it here: http://jussik.github.io/HexSpace/
 
