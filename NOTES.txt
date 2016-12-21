@@ -87,26 +87,3 @@ is equipment, inventory item or instant use?
 inventory item has:
 type
 quantity
-
-
-turret types (1, 3, 10)
-1 1
-2 11
-3 3
-4 31
-5 311
-6 33
-7 331
-8 3311
-9 333
-10 x
-11 x1
-12 x11
-13 x3
-14 x31
-15 x311
-16 x33
-17 x331
-18 x3311
-19 x333
-20 xx
