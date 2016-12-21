@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Linq;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -14,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
 	void Start()
 	{
 		if (!string.IsNullOrEmpty(seed))
-			Random.seed = seed.GetHashCode();
+			Random.InitState(seed.GetHashCode());
 
 		level = GetComponent<Level>();
 

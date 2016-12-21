@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TurretGeometry : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class TurretGeometry : MonoBehaviour
 				3, 0,
 				4, 5
 			}, MeshTopology.Lines, 0);
-			mesh.Optimize();
+			;
 		}
 		return mesh;
 	}

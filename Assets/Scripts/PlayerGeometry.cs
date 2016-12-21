@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerGeometry : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class PlayerGeometry : MonoBehaviour
 	        };
 	        mesh.SetIndices(new[] {0, 1, 2, 3, 0}, MeshTopology.LineStrip, 0);
 	        mesh.SetIndices(new[] {1, 2, 0, 2, 3, 0}, MeshTopology.Triangles, 1);
-	        mesh.Optimize();
+	        ;
 	    }
 	    return mesh;
 	}
