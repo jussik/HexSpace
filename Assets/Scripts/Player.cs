@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 	public event EventHandler Changed;
 
 	public GameObject turretPrefab;
+	public ScreenFlash screenFlash;
 
 	private readonly List<TurretGeometry> turrets = new List<TurretGeometry>();
 
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
 			enemyHealth -= level;
 			if (enemyHealth > 0) {
 				health -= enemyLevel;
+				screenFlash.Flash(Color.red);
 			}
 		}
 		if (health > 0) {
@@ -46,6 +48,9 @@ public class Player : MonoBehaviour
 	{
 		while (xp >= nextLevelXp && nextLevelXp > -1) {
 			level++;
+			if(level > 1)
+				screenFlash.Flash(Color.white);
+
 			UpdateTurrets();
 
 			nextLevelXp = level <= levelXps.Length
