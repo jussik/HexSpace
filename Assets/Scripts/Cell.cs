@@ -18,9 +18,7 @@ public class Cell : MonoBehaviour
 
 	public void UpdateThreat()
 	{
-		threat = enemy > 0
-			? enemy
-			: adjacents.Sum(c => c.enemy);
+		threat = adjacents.Sum(c => c.enemy) + enemy;
 		UpdateModel();
 	}
 
@@ -49,17 +47,21 @@ public class Cell : MonoBehaviour
 
 	void UpdateModel()
 	{
-		var text = GetComponentInChildren<TextMesh>();
-		if (enemy > 0)
-			text.GetComponent<MeshRenderer>().material.color = Color.red;
-		if (isRevealed) {
+		GetComponent<MeshRenderer>().materials[1].color = isRevealed ? new Color(0.2f, 0.2f, 0.2f) : new Color(0.25f, 0.25f, 0.25f);
+		if (!isRevealed)
+			return;
+		{
 			var pos = transform.position;
 			pos.z = 0.5f;
 			transform.position = pos;
 			GetComponent<Collider2D>().enabled = false;
+
+			var texts = GetComponentsInChildren<TextMesh>();
+			var text = texts.First(t => t.name == "Number");
 			text.text = threat == 0 ? string.Empty : threat.ToString();
+			if (enemy > 0)
+				texts.First(t => t.name == "Enemy").text = enemy.ToString();
 		}
-		GetComponent<MeshRenderer>().materials[1].color = isRevealed ? new Color(0.2f, 0.2f, 0.2f) : new Color(0.25f, 0.25f, 0.25f);
 	}
 
 	void OnMouseOver()
